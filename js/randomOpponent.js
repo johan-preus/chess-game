@@ -27,6 +27,7 @@ function onDrop (source, target) {
   if (move === null) return 'snapback'
 
   updateStatus()
+  randomMove();
 }
 
 // update the board position after the piece snap
