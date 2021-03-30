@@ -15,10 +15,11 @@
       href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
       integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU"
       crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/styles.css">
 
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100 bodyDark text-light">
 
     <header>
         <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark">
@@ -44,22 +45,33 @@
     </header>
 
     <main role="main" class="container">
-        <h1 class="mt-5">Chess</h1>
-        <p class="lead">Play chess here, going to put more stuff in.</p>
-        <div id="myBoard" style="width: 400px"></div>
-        <label>Status:</label>
-        <div id="status"></div>
-        <label>FEN:</label>
-        <div id="fen"></div>
-        <label>PGN:</label>
-        <div id="pgn"></div>
+        <div class="row">
+            <div class="col col-md-8">
+                <h1 class="mt-5 text-center">Chess</h1>
+                <p class="lead text-center">Play chess here, going to put more stuff in.</p>
+                <div id="myBoard" class="mx-auto mb-5" style="width: 400px"></div>
+
+
+                
+            </div>
+            <div class="col col-md-4 mt-5">
+                <label>Status:</label>
+                <div id="status"></div>
+                <label class="mt-5">PGN:</label>
+                <div id="pgn"></div>
+            </div>
+        </div>
+        
 
     </main>
     
 
-    <footer class="footer">
-        <div class="container">
-
+    <footer class="footer mt-auto mb-4">
+        <div class="container text-light">
+            <div class="col col-md-8 text-center">
+                <label>FEN:</label>
+                <div id="fen"></div>
+            </div>
         </div>
     </footer>
 
@@ -75,6 +87,7 @@
         crossorigin="anonymous"></script>
     <script src="node_modules/chess.js/chess.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/chessScript.js"></script>
 
 </body>
 
