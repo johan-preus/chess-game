@@ -51,9 +51,18 @@
                 <button id="resetBtn" class="btn btn-primary mx-auto d-block">Reset</button>
             </div>
             <div class="col col-md-4 mt-5">
-                <label>Status:</label>
+                <label id="statusLabel">Status:</label>
                 <div id="status"></div>
-                <label class="mt-5">PGN:</label>
+                <label id="pgnLabel" class="mt-5">PGN:</label>
+                <table id="pgnTable" class="table table-striped table-dark">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
                 <div id="pgn"></div>
             </div>
         </div>

@@ -3,6 +3,8 @@ var game = new Chess()
 var $status = $('#status')
 var $fen = $('#fen')
 var $pgn = $('#pgn')
+const tableBody = document.querySelector('#pgnTable tbody')
+
 
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
@@ -27,6 +29,8 @@ function onDrop (source, target) {
   if (move === null) return 'snapback'
 
   updateStatus()
+  console.log(game.pgn())
+  updateTable(move)
 }
 
 // update the board position after the piece snap
@@ -65,7 +69,7 @@ function updateStatus () {
 
   $status.html(status)
   $fen.html(game.fen())
-  $pgn.html(game.pgn())
+  // $pgn.html(game.pgn())
 }
 
 var config = {
@@ -80,9 +84,33 @@ board = Chessboard('myBoard', config)
 updateStatus()
 
 
+function updateTable(){
+  const pgnArr = game.pgn().split(' ')
+  const move = pgnArr[pgnArr.length - 1];
+  if(game.turn() === 'b'){
+    // white just moved
+    const row = document.createElement('tr');
+    tableBody.appendChild(row);
+    const head = document.createElement('th');
+    head.innerHTML = pgnArr[pgnArr.length - 2][0];
+    const data = document.createElement('td');
+    data.innerHTML = move;
+    row.appendChild(head);
+    row.appendChild(data);
+  } else {
+    // black just moved
+    const row = tableBody.lastChild;
+    const data = document.createElement('td');
+    data.innerHTML = move;
+    row.appendChild(data);
+  }
+}
 
-
-
+function clearTable(){
+  while (tableBody.firstChild){
+    tableBody.removeChild(tableBody.firstChild);
+  }
+}
 
 function evaluate(chessGame) {
   const fenStr = chessGame.fen().slice(0, chessGame.fen().indexOf(' '));

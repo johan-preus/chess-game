@@ -45,15 +45,15 @@
     <main role="main" class="container">
         <div class="row">
             <div class="col col-md-8">
-                <h1 class="mt-5 text-center">Chess</h1>
+                <h1 class="mt-5 text-center">Random Opponent</h1>
                 <p class="lead text-center">Play chess against an opponent making random legal moves.</p>
                 <div id="myBoard" class="mx-auto mb-5"></div>
                 <button id="resetBtn" class="btn btn-primary mx-auto d-block">Reset</button>       
             </div>
             <div class="col col-md-4 mt-5">
-                <label>Status:</label>
+                <label id="statusLabel">Status:</label>
                 <div id="status"></div>
-                <label class="mt-5">PGN:</label>
+                <label id="pgnLabel" class="mt-5">PGN:</label>
                 <div id="pgn"></div>
             </div>
         </div>
