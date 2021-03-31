@@ -5,4 +5,3 @@ resetBtn.addEventListener('click', () => {
     config.position = 'start'
     board = Chessboard('myBoard', config)
   })
-

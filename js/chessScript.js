@@ -84,25 +84,106 @@ updateStatus()
 
 
 
+function evaluate(chessGame) {
+  const fenStr = chessGame.fen().slice(0, chessGame.fen().indexOf(' '));
+  let num = 0;
+  if(game.in_draw()){
+    num = 0;
+    return num;
+  }
+  if(chessGame.in_checkmate()){
+    if(chessGame.turn() === 'b'){
+      num += 10000;
+      return num;
+    } else {
+      num -= 10000;
+      return num;
+    }
+  }
+  for (let char of fenStr){
+    switch(char){
+      case 'P':
+        num += 1;
+        break;
+      case 'B': 
+      case 'N':
+        num += 3;
+        break;
+      case 'R':
+        num += 5;
+        break;
+      case 'Q':
+        num += 9;
+        break;
+      case 'p':
+        num -= 1;
+        break;
+      case 'b':
+      case 'n':
+        num -= 3;
+        break;
+      case 'r':
+        num -= 5;
+        break;
+      case 'q':
+        num -= 9;
+        break;
+      default:
+        break;
+    }
+  }
+  return num;
+}
 
+function evaluateMoves(){
+  const moves = game.moves();
+  const evalArr = [];
+  const arr = [];
+  let index;
+  for(i = 0; i < moves.length; i++){
+    const chess = new Chess();
+    chess.load_pgn(game.pgn());
+    chess.move(moves[i]);
+    const evaluation = evaluate(chess);
+    evalArr.push(evaluation);
+    arr.push(moves[i]);
+  }
+  if(game.turn() === 'w'){
+    index = evalArr.indexOf(Math.max(...evalArr));
+  } else {
+    index = evalArr.indexOf(Math.min(...evalArr));
+  }
+  return arr[index];
+}
 
-
-
-function randomMove() {
+function oneMoveCapture() {
   const moves = game.moves();
   if(moves.length === 0){
     return;
   } 
-  const move = moves[Math.floor(Math.random() * moves.length)]
-  game.move(move)
+  game.move(evaluateMoves())
+  $status.html(status)
+  $fen.html(game.fen())
+  $pgn.html(game.pgn())
   config.position = (game.fen())
   board = Chessboard('myBoard', config)
 }
 
-
-
-while (!game.game_over() && game.turn() === 'b') {
-  const moves = game.moves()
+function randomMove(chessGame) {
+  const moves = chessGame.moves();
+  if(moves.length === 0){
+    return;
+  } 
   const move = moves[Math.floor(Math.random() * moves.length)]
-  game.move(move)
+  chessGame.move(move)
+  config.position = (chessGame.fen())
+  // board = Chessboard('myBoard', config)
 }
+
+
+
+// while (!game.game_over() && game.turn() === 'b') {
+//   const moves = game.moves()
+//   const move = moves[Math.floor(Math.random() * moves.length)]
+//   game.move(move)
+// }

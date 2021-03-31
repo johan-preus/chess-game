@@ -9,8 +9,6 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css" />
     <link rel="stylesheet"
       href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
       integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU"
@@ -49,10 +47,8 @@
             <div class="col col-md-8">
                 <h1 class="mt-5 text-center">Chess</h1>
                 <p class="lead text-center">Play chess against an opponent making random legal moves.</p>
-                <div id="myBoard" class="mx-auto mb-5" style="width: 400px"></div>
-                <button id="resetBtn" class="btn btn-primary mx-auto d-block">Reset</button>
-
-                
+                <div id="myBoard" class="mx-auto mb-5"></div>
+                <button id="resetBtn" class="btn btn-primary mx-auto d-block">Reset</button>       
             </div>
             <div class="col col-md-4 mt-5">
                 <label>Status:</label>
@@ -61,14 +57,11 @@
                 <div id="pgn"></div>
             </div>
         </div>
-        
-
-    </main>
-    
+    </main> 
 
     <footer class="footer mt-auto mb-4">
         <div class="container text-light">
-            <div class="col col-md-8 text-center">
+            <div class="col col-md-8 text-center mt-3">
                 <label>FEN:</label>
                 <div id="fen"></div>
             </div>

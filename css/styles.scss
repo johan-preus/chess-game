@@ -1,5 +1,25 @@
 $color-dark: #121212;
+$bootstrap-sm: 576px;
+$bootstrap-md: 768px;
+$bootstrap-lg: 992px;
+$bootstrap-xl: 1200px;
 
 body {
     background-color: $color-dark;
+}
+
+#myBoard {
+    width: 300px;
+    @media only screen and (min-width:$bootstrap-sm) {
+        width: 350px;
+    }
+    @media only screen and (min-width:$bootstrap-md) {
+        width: 400px;
+    }
+    @media only screen and (min-width:$bootstrap-lg) {
+        width: 500px;
+    }    
+    @media only screen and (min-width:$bootstrap-xl) {
+        width: 600px;
+    }    
 }

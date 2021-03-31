@@ -96,14 +96,9 @@ function randomMove() {
   } 
   const move = moves[Math.floor(Math.random() * moves.length)]
   game.move(move)
+  $status.html(status)
+  $fen.html(game.fen())
+  $pgn.html(game.pgn())
   config.position = (game.fen())
   board = Chessboard('myBoard', config)
-}
-
-
-
-while (!game.game_over() && game.turn() === 'b') {
-  const moves = game.moves()
-  const move = moves[Math.floor(Math.random() * moves.length)]
-  game.move(move)
 }

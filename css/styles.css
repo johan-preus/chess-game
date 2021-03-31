@@ -1,2 +1,17 @@
 body {
   background-color: #121212; }
+
+#myBoard {
+  width: 300px; }
+  @media only screen and (min-width: 576px) {
+    #myBoard {
+      width: 350px; } }
+  @media only screen and (min-width: 768px) {
+    #myBoard {
+      width: 400px; } }
+  @media only screen and (min-width: 992px) {
+    #myBoard {
+      width: 500px; } }
+  @media only screen and (min-width: 1200px) {
+    #myBoard {
+      width: 600px; } }
