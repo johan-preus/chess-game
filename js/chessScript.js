@@ -29,8 +29,10 @@ function onDrop (source, target) {
   if (move === null) return 'snapback'
 
   updateStatus()
-  console.log(game.pgn())
-  updateTable(move)
+  updateTable()
+  oneMoveCapture()
+  updateStatus()
+  updateTable()
 }
 
 // update the board position after the piece snap
@@ -164,24 +166,31 @@ function evaluate(chessGame) {
 }
 
 function evaluateMoves(){
+  class MoveObj {
+    constructor(move, moveEval, id){
+      this.move = move;
+      this.eval = moveEval;
+      this.id = id;
+    }
+  }
   const moves = game.moves();
   const evalArr = [];
-  const arr = [];
-  let index;
+  let arr = [];
   for(i = 0; i < moves.length; i++){
     const chess = new Chess();
     chess.load_pgn(game.pgn());
     chess.move(moves[i]);
     const evaluation = evaluate(chess);
     evalArr.push(evaluation);
-    arr.push(moves[i]);
+    const move = new MoveObj(moves[i], evaluation, i)
+    arr.push(move);
   }
   if(game.turn() === 'w'){
-    index = evalArr.indexOf(Math.max(...evalArr));
+    arr = arr.filter(m => m.eval === Math.max(...evalArr))
   } else {
-    index = evalArr.indexOf(Math.min(...evalArr));
+    arr = arr.filter(m => m.eval === Math.min(...evalArr))
   }
-  return arr[index];
+  return arr[Math.floor(Math.random() * arr.length)].move
 }
 
 function oneMoveCapture() {
