@@ -86,6 +86,16 @@ board = Chessboard('myBoard', config)
 updateStatus()
 
 
+class MoveObj {
+  constructor(move, moveEval, id){
+    this.move = move;
+    this.eval = moveEval;
+    this.id = id;
+  }
+}
+
+
+
 function updateTable(){
   const pgnArr = game.pgn().split(' ')
   const move = pgnArr[pgnArr.length - 1];
@@ -94,7 +104,10 @@ function updateTable(){
     const row = document.createElement('tr');
     tableBody.appendChild(row);
     const head = document.createElement('th');
-    head.innerHTML = pgnArr[pgnArr.length - 2][0];
+
+    //this stops working with 2 digit numbers
+    head.innerHTML = pgnArr[pgnArr.length - 2][0]; 
+
     const data = document.createElement('td');
     data.innerHTML = move;
     row.appendChild(head);
@@ -165,25 +178,60 @@ function evaluate(chessGame) {
   return num;
 }
 
-function evaluateMoves(){
-  class MoveObj {
-    constructor(move, moveEval, id){
-      this.move = move;
-      this.eval = moveEval;
-      this.id = id;
-    }
-  }
+function getMoves(){
   const moves = game.moves();
-  const evalArr = [];
+  // const evalArr = [];
   let arr = [];
   for(i = 0; i < moves.length; i++){
     const chess = new Chess();
     chess.load_pgn(game.pgn());
     chess.move(moves[i]);
     const evaluation = evaluate(chess);
-    evalArr.push(evaluation);
+    // evalArr.push(evaluation);
     const move = new MoveObj(moves[i], evaluation, i)
     arr.push(move);
+  }
+  // if(game.turn() === 'w'){
+  //   arr = arr.filter(m => m.eval === Math.max(...evalArr))
+  // } else {
+  //   arr = arr.filter(m => m.eval === Math.min(...evalArr))
+  // }
+  // return arr[Math.floor(Math.random() * arr.length)].move
+  return arr;
+}
+
+// make a reducer function maybe???
+function moveAndResponse() {
+  class TwoMoveObj extends MoveObj{
+    constructor(move, moveEval, id, secondMove){
+      super(move, moveEval, id)
+      this.secondMove = secondMove;
+    }
+  }
+  const arr = getMoves();
+  const newArr = [];
+  for(i = 0; i < arr.length; i++){
+    const chess = new Chess();
+    chess.load_pgn(game.pgn());
+    chess.move(arr[i].move);
+    const moves = chess.moves();
+    for(j = 0; j < moves.length; j++){
+      const chess = new Chess();
+      chess.load_pgn(game.pgn());
+      chess.move(arr[i].move);
+      chess.move(moves[j]);
+      const evaluation = evaluate(chess);
+      const move = new TwoMoveObj(arr[i].move, evaluation, j, moves[j])
+      newArr.push(move);
+    }
+  }
+  console.log(newArr)
+}
+
+function bestMove(arr){
+  const evalArr = [];
+  for(i = 0; i < arr.length; i++){
+    evalArr.push(arr[i].eval)
   }
   if(game.turn() === 'w'){
     arr = arr.filter(m => m.eval === Math.max(...evalArr))
@@ -198,7 +246,7 @@ function oneMoveCapture() {
   if(moves.length === 0){
     return;
   } 
-  game.move(evaluateMoves())
+  game.move(bestMove(getMoves()))
   $status.html(status)
   $fen.html(game.fen())
   $pgn.html(game.pgn())
